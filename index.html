@@ -9,10 +9,21 @@
   <meta property="og:description" content="끈적임 없이 오래 지속되는 데일리 핸드케어" />
   <meta property="og:image" content="assets/landing.png" />
   <meta property="og:type" content="website" />
+
   <style>
-    :root { --bg: #f5eee7; }
-    * { box-sizing: border-box; }
-    html { background: var(--bg); }
+    :root {
+      --bg: #f5eee7;
+      --brown: #4a321e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--bg);
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -20,7 +31,9 @@
       display: flex;
       justify-content: center;
       font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      padding-bottom: 86px;
     }
+
     .page {
       position: relative;
       width: min(100%, 361px);
@@ -28,11 +41,14 @@
       background: var(--bg);
       box-shadow: 0 0 40px rgba(65, 45, 26, .08);
     }
+
     .landing {
       width: 100%;
       height: auto;
       display: block;
     }
+
+    /* PC/이미지 내부 '지금 구매하기' 버튼 위 투명 클릭 영역 */
     .cta-buy {
       position: absolute;
       left: 18.2%;
@@ -43,34 +59,73 @@
       text-indent: -9999px;
       overflow: hidden;
       cursor: pointer;
+      z-index: 10;
     }
-    .cta-buy:focus-visible {
+
+    .cta-buy:focus-visible,
+    .fixed-buy:focus-visible {
       outline: 3px solid rgba(255, 255, 255, .9);
       outline-offset: 3px;
     }
+
+    /* 모바일/전체 기기 하단 고정 실제 CTA 버튼 */
+    .fixed-buy {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      width: min(86%, 320px);
+      height: 52px;
+      border-radius: 12px;
+      background: var(--brown);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 17px;
+      text-decoration: none;
+      z-index: 9999;
+      box-shadow: 0 8px 24px rgba(58, 42, 27, .22);
+    }
   </style>
 </head>
+
 <body>
   <main class="page">
     <img class="landing" src="assets/landing.png" alt="LUVERE 핸드크림 랜딩페이지" />
-    <a class="cta-buy" id="buyNow" href="thank-you.html" aria-label="지금 구매하기">지금 구매하기</a>
+
+    <a class="cta-buy js-buy-link" href="thank-you.html" aria-label="지금 구매하기">
+      지금 구매하기
+    </a>
   </main>
+
+  <a class="fixed-buy js-buy-link" href="thank-you.html" aria-label="지금 구매하기">
+    지금 구매하기
+  </a>
+
   <script>
-    const buyNow = document.getElementById("buyNow");
     const currentParams = new URLSearchParams(window.location.search);
-    const nextUrl = new URL(buyNow.getAttribute("href"), window.location.href);
+    const buyLinks = document.querySelectorAll(".js-buy-link");
 
-    currentParams.forEach((value, key) => nextUrl.searchParams.set(key, value));
-    buyNow.href = nextUrl.pathname + nextUrl.search;
+    buyLinks.forEach((link) => {
+      const nextUrl = new URL(link.getAttribute("href"), window.location.href);
 
-    buyNow.addEventListener("click", () => {
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
-        event: "click_buy_now",
-        page: "luvere_landing",
-        utm_source: currentParams.get("utm_source") || "",
-        utm_campaign: currentParams.get("utm_campaign") || "",
-        utm_content: currentParams.get("utm_content") || ""
+      currentParams.forEach((value, key) => {
+        nextUrl.searchParams.set(key, value);
+      });
+
+      link.href = nextUrl.pathname + nextUrl.search;
+
+      link.addEventListener("click", () => {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "click_buy_now",
+          page: "luvere_landing",
+          utm_source: currentParams.get("utm_source") || "",
+          utm_campaign: currentParams.get("utm_campaign") || "",
+          utm_content: currentParams.get("utm_content") || ""
+        });
       });
     });
   </script>
