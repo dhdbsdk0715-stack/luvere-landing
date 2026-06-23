@@ -48,7 +48,6 @@
       display: block;
     }
 
-    /* PC/이미지 내부 '지금 구매하기' 버튼 위 투명 클릭 영역 */
     .cta-buy {
       position: absolute;
       left: 18.2%;
@@ -68,7 +67,6 @@
       outline-offset: 3px;
     }
 
-    /* 모바일/전체 기기 하단 고정 실제 CTA 버튼 */
     .fixed-buy {
       position: fixed;
       left: 50%;
@@ -89,22 +87,26 @@
       box-shadow: 0 8px 24px rgba(58, 42, 27, .22);
     }
   </style>
+
   <!-- Meta Pixel Code -->
   <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1375934667767082');
-  fbq('track', 'PageView');
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '1375934667767082');
+    fbq('track', 'PageView');
   </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=1375934667767082&ev=PageView&noscript=1"
-  /></noscript>
+
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=1375934667767082&ev=PageView&noscript=1" />
+  </noscript>
   <!-- End Meta Pixel Code -->
 </head>
 
@@ -136,26 +138,13 @@
 
       link.addEventListener("click", (e) => {
         e.preventDefault();
-      
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: "click_buy_now",
-          page: "luvere_landing",
-          utm_source: currentParams.get("utm_source") || "",
-          utm_campaign: currentParams.get("utm_campaign") || "",
-          utm_content: currentParams.get("utm_content") || ""
-        });
-      
+
         const destination = link.href;
-      
+
         if (typeof fbq === "function") {
           fbq("trackCustom", "ClickBuyNow");
         }
-      
-        setTimeout(() => {
-          window.location.href = destination;
-        }, 500);
-      });
+
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
           event: "click_buy_now",
@@ -164,6 +153,10 @@
           utm_campaign: currentParams.get("utm_campaign") || "",
           utm_content: currentParams.get("utm_content") || ""
         });
+
+        setTimeout(() => {
+          window.location.href = destination;
+        }, 1000);
       });
     });
   </script>
