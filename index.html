@@ -134,11 +134,28 @@
 
       link.href = nextUrl.pathname + nextUrl.search;
 
-      link.addEventListener("click", () => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+      
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "click_buy_now",
+          page: "luvere_landing",
+          utm_source: currentParams.get("utm_source") || "",
+          utm_campaign: currentParams.get("utm_campaign") || "",
+          utm_content: currentParams.get("utm_content") || ""
+        });
+      
+        const destination = link.href;
+      
         if (typeof fbq === "function") {
-          fbq("track", "InitiateCheckout", {}, {
-            eventID: Date.now().toString()
-          });
+          fbq("track", "InitiateCheckout");
+        }
+      
+        setTimeout(() => {
+          window.location.href = destination;
+        }, 500);
+      });
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
           event: "click_buy_now",
