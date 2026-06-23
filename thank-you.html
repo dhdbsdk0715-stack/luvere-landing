@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CTA 클릭 완료 | LUVERE</title>
+  <meta name="description" content="LUVERE 랜딩페이지 CTA 클릭 완료 페이지" />
+  <style>
+    :root {
+      --bg: #f5eee7;
+      --ink: #3a2a1b;
+      --brown: #4a321e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+    .box {
+      width: min(100%, 420px);
+      background: rgba(255, 255, 255, .5);
+      border: 1px solid rgba(58, 42, 27, .12);
+      border-radius: 20px;
+      padding: 40px 28px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      line-height: 1.35;
+    }
+    p {
+      margin: 0 0 24px;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+    a {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 10px;
+      background: var(--brown);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>CTA 클릭 완료</h1>
+    <p>소재 테스트용 전환 확인 페이지입니다.<br />광고 플랫폼에서는 이 페이지 도달을 구매 또는 CTA 전환 이벤트로 측정할 수 있습니다.</p>
+    <a id="backLink" href="index.html">랜딩페이지로 돌아가기</a>
+  </div>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    const params = new URLSearchParams(window.location.search);
+    window.dataLayer.push({
+      event: "view_thank_you",
+      page: "luvere_thank_you",
+      utm_source: params.get("utm_source") || "",
+      utm_campaign: params.get("utm_campaign") || "",
+      utm_content: params.get("utm_content") || ""
+    });
+
+    const backLink = document.getElementById("backLink");
+    const backUrl = new URL(backLink.getAttribute("href"), window.location.href);
+    params.forEach((value, key) => backUrl.searchParams.set(key, value));
+    backLink.href = backUrl.pathname + backUrl.search;
+  </script>
+</body>
+</html>
